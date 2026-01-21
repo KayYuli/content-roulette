@@ -8,9 +8,9 @@
                 * { margin: 0; padding: 0; box-sizing: border-box; }
                 body {
                               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                              background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                              background: linear-gradient(135deg, #2d2d3a 0%, #f5e6e8 100%);
                               min-height: 100vh;
-                              color: #fff;
+                              color: #4a3f4f;
                               padding: 20px;
                 }
                 .container { max-width: 600px; margin: 0 auto; }
@@ -18,30 +18,30 @@
                               text-align: center;
                               margin-bottom: 10px;
                               font-size: 2.5rem;
-                              background: linear-gradient(90deg, #f39c12, #e74c3c);
+                              background: linear-gradient(90deg, #e8b4b8, #9b7bb8);
                               -webkit-background-clip: text;
                               -webkit-text-fill-color: transparent;
                               background-clip: text;
                 }
-                .subtitle { text-align: center; color: #888; margin-bottom: 30px; }
+                .subtitle { text-align: center; color: #7a6a7f; margin-bottom: 30px; }
                 .veto-counter {
                               text-align: center;
                               padding: 15px;
-                              background: rgba(255,255,255,0.1);
+                              background: rgba(255,255,255,0.5);
                               border-radius: 10px;
                               margin-bottom: 20px;
                 }
-                .veto-counter span { font-size: 1.5rem; color: #f39c12; }
+                .veto-counter span { font-size: 1.5rem; color: #e8b4b8; }
                 .card {
-                              background: rgba(255,255,255,0.05);
+                              background: rgba(255,255,255,0.7);
                               border-radius: 15px;
                               padding: 25px;
                               margin-bottom: 20px;
-                              border: 1px solid rgba(255,255,255,0.1);
+                              border: 1px solid rgba(255,255,255,0.5);
                 }
                 .todays-idea {
                               background: linear-gradient(135deg, rgba(243,156,18,0.2), rgba(231,76,60,0.2));
-                              border: 2px solid #f39c12;
+                              border: 2px solid #e8b4b8;
                 }
                 .idea-text { font-size: 1.3rem; line-height: 1.6; margin-bottom: 20px; }
                 .btn-group { display: flex; gap: 10px; }
@@ -57,24 +57,24 @@
                 }
                 .btn-posted { background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; }
                 .btn-posted:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(46,204,113,0.4); }
-                .btn-trash { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; }
+                .btn-trash { background: linear-gradient(135deg, #9b7bb8, #8b6aa8); color: white; }
                 .btn-trash:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(231,76,60,0.4); }
                 .btn-trash:disabled { background: #555; cursor: not-allowed; transform: none; box-shadow: none; }
-                .btn-add { background: linear-gradient(135deg, #3498db, #2980b9); color: white; width: 100%; margin-bottom: 15px; }
+                .btn-add { background: linear-gradient(135deg, #7eb8da, #5a9fc9); color: white; width: 100%; margin-bottom: 15px; }
                 .btn-add:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(52,152,219,0.4); }
-                .btn-pick { background: linear-gradient(135deg, #f39c12, #e67e22); color: white; width: 100%; }
+                .btn-pick { background: linear-gradient(135deg, #e8b4b8, #8b6aa8); color: white; width: 100%; }
                 .btn-pick:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(243,156,18,0.4); }
                 .ideas-list { list-style: none; }
                 .ideas-list li {
                               padding: 12px 15px;
-                              background: rgba(255,255,255,0.05);
+                              background: rgba(255,255,255,0.7);
                               margin-bottom: 8px;
                               border-radius: 8px;
                               display: flex;
                               justify-content: space-between;
                               align-items: center;
                 }
-                .delete-btn { background: transparent; border: none; color: #e74c3c; cursor: pointer; font-size: 1.2rem; padding: 5px; flex: 0; }
+                .delete-btn { background: transparent; border: none; color: #9b7bb8; cursor: pointer; font-size: 1.2rem; padding: 5px; flex: 0; }
                 .modal {
                               display: none;
                               position: fixed;
@@ -87,7 +87,7 @@
                 }
                 .modal.active { display: flex; }
                 .modal-content {
-                              background: #1a1a2e;
+                              background: #f5e6e8;
                               padding: 30px;
                               border-radius: 15px;
                               width: 90%;
@@ -99,22 +99,22 @@
                               padding: 15px;
                               border: 1px solid rgba(255,255,255,0.2);
                               border-radius: 10px;
-                              background: rgba(255,255,255,0.05);
+                              background: rgba(255,255,255,0.7);
                               color: white;
                               font-size: 1rem;
                               resize: vertical;
                               min-height: 100px;
                               margin-bottom: 15px;
                 }
-                .modal-content textarea:focus { outline: none; border-color: #f39c12; }
+                .modal-content textarea:focus { outline: none; border-color: #e8b4b8; }
                 .modal-btns { display: flex; gap: 10px; }
                 .btn-cancel { background: #555; color: white; }
                 .btn-save { background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; }
-                .empty-state { text-align: center; padding: 40px; color: #888; }
+                .empty-state { text-align: center; padding: 40px; color: #7a6a7f; }
                 .stats { display: flex; gap: 15px; margin-top: 20px; }
-                .stat-box { flex: 1; text-align: center; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px; }
-                .stat-number { font-size: 1.5rem; font-weight: bold; color: #f39c12; }
-                .stat-label { font-size: 0.8rem; color: #888; }
+                .stat-box { flex: 1; text-align: center; padding: 15px; background: rgba(255,255,255,0.7); border-radius: 10px; }
+                .stat-number { font-size: 1.5rem; font-weight: bold; color: #e8b4b8; }
+                .stat-label { font-size: 0.8rem; color: #7a6a7f; }
                 h2 { margin-bottom: 15px; font-size: 1.2rem; }
             </style>
   </head>
