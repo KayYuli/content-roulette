@@ -5,11 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Content Roulette</title>
       <style>
-                * {
-                              margin: 0;
-                              padding: 0;
-                              box-sizing: border-box;
-                }
+                * { margin: 0; padding: 0; box-sizing: border-box; }
                 body {
                               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                               background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -17,10 +13,7 @@
                               color: #fff;
                               padding: 20px;
                 }
-                .container {
-                              max-width: 600px;
-                              margin: 0 auto;
-                }
+                .container { max-width: 600px; margin: 0 auto; }
                 h1 {
                               text-align: center;
                               margin-bottom: 10px;
@@ -30,11 +23,7 @@
                               -webkit-text-fill-color: transparent;
                               background-clip: text;
                 }
-                .subtitle {
-                              text-align: center;
-                              color: #888;
-                              margin-bottom: 30px;
-                }
+                .subtitle { text-align: center; color: #888; margin-bottom: 30px; }
                 .veto-counter {
                               text-align: center;
                               padding: 15px;
@@ -42,10 +31,7 @@
                               border-radius: 10px;
                               margin-bottom: 20px;
                 }
-                .veto-counter span {
-                              font-size: 1.5rem;
-                              color: #f39c12;
-                }
+                .veto-counter span { font-size: 1.5rem; color: #f39c12; }
                 .card {
                               background: rgba(255,255,255,0.05);
                               border-radius: 15px;
@@ -57,15 +43,8 @@
                               background: linear-gradient(135deg, rgba(243,156,18,0.2), rgba(231,76,60,0.2));
                               border: 2px solid #f39c12;
                 }
-                .idea-text {
-                              font-size: 1.3rem;
-                              line-height: 1.6;
-                              margin-bottom: 20px;
-                }
-                .btn-group {
-                              display: flex;
-                              gap: 10px;
-                }
+                .idea-text { font-size: 1.3rem; line-height: 1.6; margin-bottom: 20px; }
+                .btn-group { display: flex; gap: 10px; }
                 button {
                               flex: 1;
                               padding: 15px 20px;
@@ -76,50 +55,16 @@
                               cursor: pointer;
                               transition: all 0.3s ease;
                 }
-                .btn-posted {
-                              background: linear-gradient(135deg, #27ae60, #2ecc71);
-                              color: white;
-                }
-                .btn-posted:hover {
-                              transform: translateY(-2px);
-                              box-shadow: 0 5px 20px rgba(46,204,113,0.4);
-                }
-                .btn-trash {
-                              background: linear-gradient(135deg, #e74c3c, #c0392b);
-                              color: white;
-                }
-                .btn-trash:hover {
-                              transform: translateY(-2px);
-                              box-shadow: 0 5px 20px rgba(231,76,60,0.4);
-                }
-                .btn-trash:disabled {
-                              background: #555;
-                              cursor: not-allowed;
-                              transform: none;
-                              box-shadow: none;
-                }
-                .btn-add {
-                              background: linear-gradient(135deg, #3498db, #2980b9);
-                              color: white;
-                              width: 100%;
-                              margin-bottom: 15px;
-                }
-                .btn-add:hover {
-                              transform: translateY(-2px);
-                              box-shadow: 0 5px 20px rgba(52,152,219,0.4);
-                }
-                .btn-pick {
-                              background: linear-gradient(135deg, #f39c12, #e67e22);
-                              color: white;
-                              width: 100%;
-                }
-                .btn-pick:hover {
-                              transform: translateY(-2px);
-                              box-shadow: 0 5px 20px rgba(243,156,18,0.4);
-                }
-                .ideas-list {
-                              list-style: none;
-                }
+                .btn-posted { background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; }
+                .btn-posted:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(46,204,113,0.4); }
+                .btn-trash { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; }
+                .btn-trash:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(231,76,60,0.4); }
+                .btn-trash:disabled { background: #555; cursor: not-allowed; transform: none; box-shadow: none; }
+                .btn-add { background: linear-gradient(135deg, #3498db, #2980b9); color: white; width: 100%; margin-bottom: 15px; }
+                .btn-add:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(52,152,219,0.4); }
+                .btn-pick { background: linear-gradient(135deg, #f39c12, #e67e22); color: white; width: 100%; }
+                .btn-pick:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(243,156,18,0.4); }
+                .ideas-list { list-style: none; }
                 .ideas-list li {
                               padding: 12px 15px;
                               background: rgba(255,255,255,0.05);
@@ -129,30 +74,18 @@
                               justify-content: space-between;
                               align-items: center;
                 }
-                .delete-btn {
-                              background: transparent;
-                              border: none;
-                              color: #e74c3c;
-                              cursor: pointer;
-                              font-size: 1.2rem;
-                              padding: 5px;
-                              flex: 0;
-                }
+                .delete-btn { background: transparent; border: none; color: #e74c3c; cursor: pointer; font-size: 1.2rem; padding: 5px; flex: 0; }
                 .modal {
                               display: none;
                               position: fixed;
-                              top: 0;
-                              left: 0;
-                              width: 100%;
-                              height: 100%;
+                              top: 0; left: 0;
+                              width: 100%; height: 100%;
                               background: rgba(0,0,0,0.8);
                               justify-content: center;
                               align-items: center;
                               z-index: 100;
                 }
-                .modal.active {
-                              display: flex;
-                }
+                .modal.active { display: flex; }
                 .modal-content {
                               background: #1a1a2e;
                               padding: 30px;
@@ -160,9 +93,7 @@
                               width: 90%;
                               max-width: 400px;
                 }
-                .modal-content h3 {
-                              margin-bottom: 20px;
-                }
+                .modal-content h3 { margin-bottom: 20px; }
                 .modal-content textarea {
                               width: 100%;
                               padding: 15px;
@@ -175,63 +106,23 @@
                               min-height: 100px;
                               margin-bottom: 15px;
                 }
-                .modal-content textarea:focus {
-                              outline: none;
-                              border-color: #f39c12;
-                }
-                .modal-btns {
-                              display: flex;
-                              gap: 10px;
-                }
-                .btn-cancel {
-                              background: #555;
-                              color: white;
-                }
-                .btn-save {
-                              background: linear-gradient(135deg, #27ae60, #2ecc71);
-                              color: white;
-                }
-                .empty-state {
-                              text-align: center;
-                              padding: 40px;
-                              color: #888;
-                }
-                .stats {
-                              display: flex;
-                              gap: 15px;
-                              margin-top: 20px;
-                }
-                .stat-box {
-                              flex: 1;
-                              text-align: center;
-                              padding: 15px;
-                              background: rgba(255,255,255,0.05);
-                              border-radius: 10px;
-                }
-                .stat-number {
-                              font-size: 1.5rem;
-                              font-weight: bold;
-                              color: #f39c12;
-                }
-                .stat-label {
-                              font-size: 0.8rem;
-                              color: #888;
-                }
-                h2 {
-                              margin-bottom: 15px;
-                              font-size: 1.2rem;
-                }
+                .modal-content textarea:focus { outline: none; border-color: #f39c12; }
+                .modal-btns { display: flex; gap: 10px; }
+                .btn-cancel { background: #555; color: white; }
+                .btn-save { background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; }
+                .empty-state { text-align: center; padding: 40px; color: #888; }
+                .stats { display: flex; gap: 15px; margin-top: 20px; }
+                .stat-box { flex: 1; text-align: center; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px; }
+                .stat-number { font-size: 1.5rem; font-weight: bold; color: #f39c12; }
+                .stat-label { font-size: 0.8rem; color: #888; }
+                h2 { margin-bottom: 15px; font-size: 1.2rem; }
             </style>
   </head>
   <body>
         <div class="container">
                   <h1>Content Roulette</h1>
                 <p class="subtitle">Stop overthinking. Just post.</p>p>
-                
-                <div class="veto-counter">
-                            Vetoes remaining this week: <span id="vetoCount">1</span>span>
-                </div>div>
-        
+                <div class="veto-counter">Vetoes remaining this week: <span id="vetoCount">1</span>span></div>div>
                 <div id="todaysIdea" class="card todays-idea" style="display: none;">
                             <h2>Today's Content:</h2>
                             <p class="idea-text" id="ideaText"></p>p>
@@ -240,34 +131,22 @@
                                             <button class="btn-trash" id="trashBtn" onclick="useVeto()">À La Poubelle</button>button>
                             </div>div>
                 </div>div>
-        
                 <div class="card">
                             <button class="btn-add" onclick="openModal()">+ Add New Idea</button>button>
                             <button class="btn-pick" onclick="pickIdea()" id="pickBtn">Get Today's Idea</button>button>
-                            
                             <div id="ideasContainer">
                                             <h2 style="margin-top: 20px;">Your Ideas Pool (<span id="ideaCount">0</span>span>)</h2>
-                                            <ul class="ideas-list" id="ideasList">
-                                                                <li class="empty-state">No ideas yet. Add some!</li>li>
-                                            </ul>ul>
+                                            <ul class="ideas-list" id="ideasList"><li class="empty-state">No ideas yet. Add some!</li>li></ul>ul>
                             </div>div>
                 </div>div>
-        
                 <div class="card">
                             <h2>Your Stats</h2>
                             <div class="stats">
-                                            <div class="stat-box">
-                                                                <div class="stat-number" id="postedCount">0</div>div>
-                                                                <div class="stat-label">Posted</div>div>
-                                            </div>div>
-                                            <div class="stat-box">
-                                                                <div class="stat-number" id="trashedCount">0</div>div>
-                                                                <div class="stat-label">Trashed</div>div>
-                                            </div>div>
+                                            <div class="stat-box"><div class="stat-number" id="postedCount">0</div>div><div class="stat-label">Posted</div>div></div>div>
+                                            <div class="stat-box"><div class="stat-number" id="trashedCount">0</div>div><div class="stat-label">Trashed</div>div></div>div>
                             </div>div>
                 </div>div>
         </div>div>
-  
       <div class="modal" id="modal">
               <div class="modal-content">
                           <h3>Add New Idea</h3>
@@ -278,7 +157,6 @@
                           </div>div>
               </div>div>
       </div>div>
-  
       <script>
                 let ideas = JSON.parse(localStorage.getItem('contentIdeas')) || [];
                 let vetoesUsed = parseInt(localStorage.getItem('vetoesUsed')) || 0;
@@ -286,13 +164,11 @@
                 let currentIdea = localStorage.getItem('currentIdea') || null;
                 let postedCount = parseInt(localStorage.getItem('postedCount')) || 0;
                 let trashedCount = parseInt(localStorage.getItem('trashedCount')) || 0;
-
                 function checkVetoReset() {
                               const now = new Date();
                               const monday = new Date(now);
                               monday.setDate(monday.getDate() - monday.getDay() + 1);
                               monday.setHours(0, 0, 0, 0);
-
                               if (!lastVetoReset || new Date(lastVetoReset) < monday) {
                                                 vetoesUsed = 0;
                                                 lastVetoReset = now.toISOString();
@@ -300,7 +176,6 @@
                                                 localStorage.setItem('lastVetoReset', lastVetoReset);
                               }
                 }
-
                 function updateUI() {
                               checkVetoReset();
                               const remaining = Math.max(0, 1 - vetoesUsed);
@@ -309,59 +184,31 @@
                               document.getElementById('ideaCount').textContent = ideas.length;
                               document.getElementById('postedCount').textContent = postedCount;
                               document.getElementById('trashedCount').textContent = trashedCount;
-
                               const list = document.getElementById('ideasList');
                               if (ideas.length === 0) {
                                                 list.innerHTML = '<li class="empty-state">No ideas yet. Add some!</li>';
                               } else {
-                                                list.innerHTML = ideas.map((idea, i) => 
-                                                                      `<li><span>${idea}</span><button class="delete-btn" onclick="deleteIdea(${i})">×</button></li>`
-                                                                                           ).join('');
+                                                list.innerHTML = ideas.map((idea, i) => '<li><span>'+idea+'</span><button class="delete-btn" onclick="deleteIdea('+i+')">×</button></li>').join('');
                               }
-
                               if (currentIdea) {
                                                 document.getElementById('todaysIdea').style.display = 'block';
                                                 document.getElementById('ideaText').textContent = currentIdea;
                               }
                 }
-
-                function openModal() {
-                              document.getElementById('modal').classList.add('active');
-                              document.getElementById('newIdea').focus();
-                }
-
-                function closeModal() {
-                              document.getElementById('modal').classList.remove('active');
-                              document.getElementById('newIdea').value = '';
-                }
-
+                function openModal() { document.getElementById('modal').classList.add('active'); document.getElementById('newIdea').focus(); }
+                function closeModal() { document.getElementById('modal').classList.remove('active'); document.getElementById('newIdea').value = ''; }
                 function saveIdea() {
                               const text = document.getElementById('newIdea').value.trim();
-                              if (text) {
-                                                ideas.push(text);
-                                                localStorage.setItem('contentIdeas', JSON.stringify(ideas));
-                                                closeModal();
-                                                updateUI();
-                              }
+                              if (text) { ideas.push(text); localStorage.setItem('contentIdeas', JSON.stringify(ideas)); closeModal(); updateUI(); }
                 }
-
-                function deleteIdea(index) {
-                              ideas.splice(index, 1);
-                              localStorage.setItem('contentIdeas', JSON.stringify(ideas));
-                              updateUI();
-                }
-
+                function deleteIdea(index) { ideas.splice(index, 1); localStorage.setItem('contentIdeas', JSON.stringify(ideas)); updateUI(); }
                 function pickIdea() {
-                              if (ideas.length === 0) {
-                                                alert('Add some ideas first!');
-                                                return;
-                              }
+                              if (ideas.length === 0) { alert('Add some ideas first!'); return; }
                               const randomIndex = Math.floor(Math.random() * ideas.length);
                               currentIdea = ideas[randomIndex];
                               localStorage.setItem('currentIdea', currentIdea);
                               updateUI();
                 }
-
                 function markPosted() {
                               if (currentIdea) {
                                                 const index = ideas.indexOf(currentIdea);
@@ -373,15 +220,11 @@
                                                 localStorage.removeItem('currentIdea');
                                                 document.getElementById('todaysIdea').style.display = 'none';
                                                 updateUI();
-                                                alert('Great job! Content posted! 🎉');
+                                                alert('Great job! Content posted!');
                               }
                 }
-
                 function useVeto() {
-                              if (vetoesUsed >= 1) {
-                                                alert('No vetoes left this week! You must post this idea.');
-                                                return;
-                              }
+                              if (vetoesUsed >= 1) { alert('No vetoes left this week! You must post this idea.'); return; }
                               if (currentIdea) {
                                                 const index = ideas.indexOf(currentIdea);
                                                 if (index > -1) ideas.splice(index, 1);
@@ -393,29 +236,12 @@
                                                 currentIdea = null;
                                                 localStorage.removeItem('currentIdea');
                                                 updateUI();
-
-                                                if (ideas.length > 0) {
-                                                                      pickIdea();
-                                                                      alert('Idea trashed! Here is your new pick - no backing out now!');
-                                                } else {
-                                                                      document.getElementById('todaysIdea').style.display = 'none';
-                                                                      alert('Idea trashed! Add more ideas to continue.');
-                                                }
+                                                if (ideas.length > 0) { pickIdea(); alert('Idea trashed! Here is your new pick - no backing out now!'); }
+                                                else { document.getElementById('todaysIdea').style.display = 'none'; alert('Idea trashed! Add more ideas to continue.'); }
                               }
                 }
-
-                document.getElementById('newIdea').addEventListener('keydown', function(e) {
-                              if (e.key === 'Enter' && !e.shiftKey) {
-                                                e.preventDefault();
-                                                saveIdea();
-                              }
-                });
-
+                document.getElementById('newIdea').addEventListener('keydown', function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); saveIdea(); } });
                 updateUI();
       </script>
   </body>
-</html>html>
-      </script></h2></h1>
-  </body>
-      </style></title>
-  </head>
+</html>
