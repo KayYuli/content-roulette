@@ -121,42 +121,42 @@
   <body>
         <div class="container">
                   <h1>Content Roulette</h1>
-                <p class="subtitle">Stop overthinking. Just post.</p>p>
-                <div class="veto-counter">Vetoes remaining this week: <span id="vetoCount">1</span>span></div>div>
+                <p class="subtitle">Stop overthinking. Just post.</p>
+                <div class="veto-counter">Vetoes remaining this week: <span id="vetoCount">1</span></div>
                 <div id="todaysIdea" class="card todays-idea" style="display: none;">
                             <h2>Today's Content:</h2>
-                            <p class="idea-text" id="ideaText"></p>p>
+                            <p class="idea-text" id="ideaText"></p>
                             <div class="btn-group">
-                                            <button class="btn-posted" onclick="markPosted()">Posted</button>button>
-                                            <button class="btn-trash" id="trashBtn" onclick="useVeto()">À La Poubelle</button>button>
-                            </div>div>
-                </div>div>
+                                            <button class="btn-posted" onclick="markPosted()">Posted</button>
+                                            <button class="btn-trash" id="trashBtn" onclick="useVeto()">À La Poubelle</button>
+                            </div>
+                </div>
                 <div class="card">
-                            <button class="btn-add" onclick="openModal()">+ Add New Idea</button>button>
-                            <button class="btn-pick" onclick="pickIdea()" id="pickBtn">Get Today's Idea</button>button>
+                            <button class="btn-add" onclick="openModal()">+ Add New Idea</button>
+                            <button class="btn-pick" onclick="pickIdea()" id="pickBtn">Get Today's Idea</button>
                             <div id="ideasContainer">
-                                            <h2 style="margin-top: 20px;">Your Ideas Pool (<span id="ideaCount">0</span>span>)</h2>
-                                            <ul class="ideas-list" id="ideasList"><li class="empty-state">No ideas yet. Add some!</li>li></ul>ul>
-                            </div>div>
-                </div>div>
+                                            <h2 style="margin-top: 20px;">Your Ideas Pool (<span id="ideaCount">0</span>)</h2>
+                                            <ul class="ideas-list" id="ideasList"><li class="empty-state">No ideas yet. Add some!</li></ul>
+                            </div>
+                </div>
                 <div class="card">
                             <h2>Your Stats</h2>
                             <div class="stats">
-                                            <div class="stat-box"><div class="stat-number" id="postedCount">0</div>div><div class="stat-label">Posted</div>div></div>div>
-                                            <div class="stat-box"><div class="stat-number" id="trashedCount">0</div>div><div class="stat-label">Trashed</div>div></div>div>
-                            </div>div>
-                </div>div>
-        </div>div>
+                                            <div class="stat-box"><div class="stat-number" id="postedCount">0</div><div class="stat-label">Posted</div></div>
+                                            <div class="stat-box"><div class="stat-number" id="trashedCount">0</div><div class="stat-label">Trashed</div></div>
+                            </div>
+                </div>
+        </div>
       <div class="modal" id="modal">
               <div class="modal-content">
                           <h3>Add New Idea</h3>
                           <textarea id="newIdea" placeholder="Enter your content idea..."></textarea>
                           <div class="modal-btns">
-                                          <button class="btn-cancel" onclick="closeModal()">Cancel</button>button>
-                                          <button class="btn-save" onclick="saveIdea()">Save Idea</button>button>
-                          </div>div>
-              </div>div>
-      </div>div>
+                                          <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                                          <button class="btn-save" onclick="saveIdea()">Save Idea</button>
+                          </div>
+              </div>
+      </div>
       <script>
                 let ideas = JSON.parse(localStorage.getItem('contentIdeas')) || [];
                 let vetoesUsed = parseInt(localStorage.getItem('vetoesUsed')) || 0;
