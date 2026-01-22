@@ -1,395 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Content Roulette</title>
-    <style>
-          *{margin:0;padding:0;box-sizing:border-box}
-          body{font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(145deg,#667eea 0%,#764ba2 50%,#f093fb 100%);min-height:100vh;color:#2d3748;padding:20px}
-          .container{max-width:500px;margin:0 auto}
-          h1{text-align:center;margin-bottom:8px;font-size:2.2rem;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,0.2);font-weight:700}
-          .subtitle{text-align:center;color:rgba(255,255,255,0.85);margin-bottom:25px;font-size:0.95rem}
-          .card{background:rgba(255,255,255,0.95);border-radius:20px;padding:25px;margin-bottom:18px;box-shadow:0 10px 40px rgba(0,0,0,0.15)}
-          .todays-idea{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none}
-          .todays-idea h2{color:rgba(255,255,255,0.9);font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:15px}
-          .idea-text{font-size:1.25rem;line-height:1.5;margin-bottom:20px;font-weight:500}
-          .btn-group{display:flex;gap:12px}
-          button{flex:1;padding:14px 20px;border:none;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.2s ease}
-          .btn-posted{background:linear-gradient(135deg,#48bb78,#38a169);color:#fff}
-          .btn-posted:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(72,187,120,0.4)}
-          .btn-skip{background:rgba(255,255,255,0.2);color:#fff;border:2px solid rgba(255,255,255,0.3)}
-          .btn-skip:hover{background:rgba(255,255,255,0.3)}
-          .btn-add{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:100%;margin-bottom:12px}
-          .btn-add:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(102,126,234,0.4)}
-          .btn-pick{background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff;width:100%}
-          .btn-pick:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(240,147,251,0.4)}
-          .ideas-toggle{background:none;border:none;color:#667eea;font-size:0.9rem;cursor:pointer;padding:10px 0;width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center}
-          .ideas-toggle:hover{color:#764ba2}
-          .ideas-pool{display:none;margin-top:15px}
-          .ideas-pool.show{display:block}
-          .ideas-list{list-style:none}
-          .ideas-list li{padding:12px 15px;background:#f7fafc;margin-bottom:8px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;color:#4a5568}
-          .idea-content{flex:1;display:flex;flex-direction:column;gap:4px}
-          .idea-category{font-size:0.7rem;color:#667eea;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
-          .idea-actions{display:flex;gap:8px;flex-shrink:0}
-          .edit-btn,.delete-btn{background:none;border:none;cursor:pointer;font-size:1rem;padding:5px;flex:0}
-          .edit-btn{color:#667eea}
-          .edit-btn:hover{color:#764ba2}
-          .delete-btn{color:#e53e3e}
-          .delete-btn:hover{color:#c53030}
-          .stats{display:flex;gap:15px;margin-top:5px}
-          .stat-box{flex:1;text-align:center;padding:20px 15px;background:#f7fafc;border-radius:12px}
-          .stat-number{font-size:2rem;font-weight:700;color:#667eea}
-          .stat-label{font-size:0.8rem;color:#718096;text-transform:uppercase;letter-spacing:0.5px;margin-top:5px}
-          .streak-box{background:linear-gradient(135deg,#f6ad55,#ed8936);color:#fff;margin-top:15px;padding:15px;border-radius:12px;text-align:center}
-          .streak-number{font-size:2.5rem;font-weight:700}
-          .streak-label{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.5px;opacity:0.9}
-          .streak-fire{font-size:1.5rem}
-          .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:100;backdrop-filter:blur(5px)}
-          .modal.active{display:flex}
-          .modal-content{background:#fff;padding:30px;border-radius:20px;width:90%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
-          .modal-content h3{margin-bottom:20px;color:#2d3748}
-          .modal-content textarea{width:100%;padding:15px;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;resize:vertical;min-height:100px;margin-bottom:15px;font-family:inherit}
-          .modal-content textarea:focus{outline:none;border-color:#667eea}
-          .modal-content select{width:100%;padding:12px;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;margin-bottom:15px;font-family:inherit;background:#fff}
-          .modal-content select:focus{outline:none;border-color:#667eea}
-          .modal-btns{display:flex;gap:10px}
-          .btn-cancel{background:#e2e8f0;color:#4a5568}
-          .btn-cancel:hover{background:#cbd5e0}
-          .btn-save{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
-          .loser-msg{display:none;text-align:center;padding:30px;font-size:2rem;color:#fff;animation:shake 0.5s ease}
-          .loser-msg.show{display:block}
-          @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
-          h2{font-size:1rem;color:#4a5568;margin-bottom:15px}
-          .empty-state{text-align:center;padding:30px;color:#a0aec0}
-          .section-toggle{background:none;border:none;color:#667eea;font-size:0.9rem;cursor:pointer;padding:10px 0;width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-          .section-toggle:hover{color:#764ba2}
-          .history-list{list-style:none;margin-top:15px;display:none}
-          .history-list.show{display:block}
-          .history-list li{padding:12px 15px;background:#f0fff4;margin-bottom:8px;border-radius:10px;color:#276749;border-left:4px solid #48bb78}
-          .history-date{font-size:0.75rem;color:#68d391;margin-top:4px}
-          .category-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
-          .filter-btn{padding:6px 12px;border-radius:20px;font-size:0.8rem;border:2px solid #e2e8f0;background:#fff;color:#4a5568;cursor:pointer}
-          .filter-btn.active{background:#667eea;color:#fff;border-color:#667eea}
-          .filter-btn:hover{border-color:#667eea}
-        </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Roulette</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(145deg,#667eea 0%,#764ba2 50%,#f093fb 100%);min-height:100vh;color:#2d3748;padding:20px}
+    .container{max-width:500px;margin:0 auto}
+    h1{text-align:center;margin-bottom:8px;font-size:2.2rem;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,0.2);font-weight:700}
+    .subtitle{text-align:center;color:rgba(255,255,255,0.85);margin-bottom:25px;font-size:0.95rem}
+    .card{background:rgba(255,255,255,0.95);border-radius:20px;padding:25px;margin-bottom:18px;box-shadow:0 10px 40px rgba(0,0,0,0.15)}
+    .todays-idea{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none}
+    .todays-idea h2{color:rgba(255,255,255,0.9);font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:15px}
+    .idea-text{font-size:1.25rem;line-height:1.5;margin-bottom:20px;font-weight:500}
+    .btn-group{display:flex;gap:12px}
+    button{flex:1;padding:14px 20px;border:none;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.2s ease}
+    .btn-posted{background:linear-gradient(135deg,#48bb78,#38a169);color:#fff}
+    .btn-posted:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(72,187,120,0.4)}
+    .btn-skip{background:rgba(255,255,255,0.2);color:#fff;border:2px solid rgba(255,255,255,0.3)}
+    .btn-skip:hover{background:rgba(255,255,255,0.3)}
+    .btn-add{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;width:100%;margin-bottom:12px}
+    .btn-add:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(102,126,234,0.4)}
+    .btn-pick{background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff;width:100%}
+    .btn-pick:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(240,147,251,0.4)}
+    .ideas-toggle{background:none;border:none;color:#667eea;font-size:0.9rem;cursor:pointer;padding:10px 0;width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center}
+    .ideas-toggle:hover{color:#764ba2}
+    .ideas-pool{display:none;margin-top:15px}
+    .ideas-pool.show{display:block}
+    .ideas-list{list-style:none}
+    .ideas-list li{padding:12px 15px;background:#f7fafc;margin-bottom:8px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;color:#4a5568}
+    .idea-content{flex:1;display:flex;flex-direction:column;gap:4px}
+    .idea-category{font-size:0.7rem;color:#667eea;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
+    .idea-actions{display:flex;gap:8px;flex-shrink:0}
+    .edit-btn,.delete-btn{background:none;border:none;cursor:pointer;font-size:1rem;padding:5px;flex:0}
+    .edit-btn{color:#667eea}
+    .edit-btn:hover{color:#764ba2}
+    .delete-btn{color:#e53e3e}
+    .delete-btn:hover{color:#c53030}
+    .stats{display:flex;gap:15px;margin-top:5px}
+    .stat-box{flex:1;text-align:center;padding:20px 15px;background:#f7fafc;border-radius:12px}
+    .stat-number{font-size:2rem;font-weight:700;color:#667eea}
+    .stat-label{font-size:0.8rem;color:#718096;text-transform:uppercase;letter-spacing:0.5px;margin-top:5px}
+    .streak-box{background:linear-gradient(135deg,#f6ad55,#ed8936);color:#fff;margin-top:15px;padding:15px;border-radius:12px;text-align:center}
+    .streak-number{font-size:2.5rem;font-weight:700}
+    .streak-label{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.5px;opacity:0.9}
+    .streak-fire{font-size:1.5rem}
+    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);justify-content:center;align-items:center;z-index:100;backdrop-filter:blur(5px)}
+    .modal.active{display:flex}
+    .modal-content{background:#fff;padding:30px;border-radius:20px;width:90%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+    .modal-content h3{margin-bottom:20px;color:#2d3748}
+    .modal-content textarea{width:100%;padding:15px;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;resize:vertical;min-height:100px;margin-bottom:15px;font-family:inherit}
+    .modal-content textarea:focus{outline:none;border-color:#667eea}
+    .modal-content select{width:100%;padding:12px;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;margin-bottom:15px;font-family:inherit;background:#fff}
+    .modal-content select:focus{outline:none;border-color:#667eea}
+    .modal-btns{display:flex;gap:10px}
+    .btn-cancel{background:#e2e8f0;color:#4a5568}
+    .btn-cancel:hover{background:#cbd5e0}
+    .btn-save{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff}
+    .loser-msg{display:none;text-align:center;padding:30px;font-size:2rem;color:#fff;animation:shake 0.5s ease}
+    .loser-msg.show{display:block}
+    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+    h2{font-size:1rem;color:#4a5568;margin-bottom:15px}
+    .empty-state{text-align:center;padding:30px;color:#a0aec0}
+    .section-toggle{background:none;border:none;color:#667eea;font-size:0.9rem;cursor:pointer;padding:10px 0;width:100%;text-align:left;display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+    .section-toggle:hover{color:#764ba2}
+    .history-list{list-style:none;margin-top:15px;display:none}
+    .history-list.show{display:block}
+    .history-list li{padding:12px 15px;background:#f0fff4;margin-bottom:8px;border-radius:10px;color:#276749;border-left:4px solid #48bb78}
+    .history-date{font-size:0.75rem;color:#68d391;margin-top:4px}
+    .category-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+    .filter-btn{padding:6px 12px;border-radius:20px;font-size:0.8rem;border:2px solid #e2e8f0;background:#fff;color:#4a5568;cursor:pointer}
+    .filter-btn.active{background:#667eea;color:#fff;border-color:#667eea}
+    .filter-btn:hover{border-color:#667eea}
+    </style>
   </head>
   <body>
-      <div class="container">
-            <h1>Content Roulette</h1>
-          <p class="subtitle">Stop overthinking. Just post.</p>p>
-          
-          <div id="loserMsg" class="loser-msg">LOSER</div>div>
-          
-          <div id="todaysIdea" class="card todays-idea" style="display:none;">
-                <h2>Today's Content</h2>
-                <p class="idea-text" id="ideaText"></p>p>
-                <div class="btn-group">
-                        <button class="btn-posted" onclick="markPosted()">Posted</button>button>
-                        <button class="btn-skip" onclick="skipIdea()">Skip</button>button>
-                </div>div>
-          </div>div>
-          
-          <div class="card">
-                <button class="btn-add" onclick="openModal()">+ Add New Idea</button>button>
-                <button class="btn-pick" onclick="pickIdea()">Get Today's Idea</button>button>
-                
-                <div class="category-filter" id="categoryFilter"></div>div>
-                
-                <button class="ideas-toggle" onclick="toggleIdeas()">
-                        <span>Your Ideas (<span id="ideaCount">0</span>)</span>
-                        <span id="toggleArrow">+</span>
-                </button>button>
-                <div class="ideas-pool" id="ideasPool">
-                        <ul class="ideas-list" id="ideasList"></ul>ul>
-                </div>div>
-          </div>div>
-          
-          <div class="card">
-                <h2>Your Stats</h2>
-                <div class="stats">
-                        <div class="stat-box">
-                                  <div class="stat-number" id="postedCount">0</div>div>
-                                  <div class="stat-label">Posted</div>div>
-                        </div>div>
-                        <div class="stat-box">
-                                  <div class="stat-number" id="skippedCount">0</div>div>
-                                  <div class="stat-label">Skipped</div>div>
-                        </div>div>
-                </div>div>
-                <div class="streak-box" id="streakBox">
-                        <span class="streak-fire">🔥</span>
-                        <div class="streak-number" id="streakCount">0</div>div>
-                        <div class="streak-label">Day Streak</div>div>
-                </div>div>
-                
-                <button class="section-toggle" onclick="toggleHistory()">
-                        <span>Post History</span>
-                        <span id="historyArrow">+</span>
-                </button>button>
-                <ul class="history-list" id="historyList"></ul>ul>
-          </div>div>
-      </div>div>
-    
-    <div class="modal" id="modal">
-        <div class="modal-content">
-              <h3 id="modalTitle">Add New Idea</h3>
-              <textarea id="newIdea" placeholder="What content could you create?"></textarea>
-              <select id="ideaCategory">
-                      <option value="">Select Category (optional)</option>option>
-                      <option value="video">📹 Video</option>option>
-                      <option value="post">📝 Post</option>option>
-                      <option value="story">📱 Story</option>option>
-                      <option value="reel">🎬 Reel</option>option>
-                      <option value="blog">📰 Blog</option>option>
-                      <option value="other">💡 Other</option>option>
-              </select>select>
-              <div class="modal-btns">
-                      <button class="btn-cancel" onclick="closeModal()">Cancel</button>button>
-                      <button class="btn-save" onclick="saveIdea()">Save</button>button>
-              </div>div>
-        </div>div>
+    <div class="container">
+      <h1>Content Roulette</h1>
+    <p class="subtitle">Stop overthinking. Just post.</p>p>
+    <div id="loserMsg" class="loser-msg">LOSER</div>div>
+    <div id="todaysIdea" class="card todays-idea" style="display:none;">
+    <h2>Today's Content</h2>
+    <p class="idea-text" id="ideaText"></p>p>
+    <div class="btn-group">
+    <button class="btn-posted" onclick="markPosted()">Posted</button>button>
+    <button class="btn-skip" onclick="skipIdea()">Skip</button>button>
     </div>div>
-    
-    <script>
-          let ideas = JSON.parse(localStorage.getItem('contentIdeas')) || [];
-          let postedCount = parseInt(localStorage.getItem('postedCount')) || 0;
-          let skippedCount = parseInt(localStorage.getItem('skippedCount')) || 0;
-          let currentIdea = localStorage.getItem('currentIdea');
-          let history = JSON.parse(localStorage.getItem('postHistory')) || [];
-          let streak = JSON.parse(localStorage.getItem('streak')) || {count: 0, lastDate: null};
-          let editingIndex = -1;
-          let activeFilter = 'all';
-
-          const categories = {
-                  video: '📹 Video',
-                  post: '📝 Post',
-                  story: '📱 Story',
-                  reel: '🎬 Reel',
-                  blog: '📰 Blog',
-                  other: '💡 Other'
-          };
-
-          function updateUI() {
-                  document.getElementById('ideaCount').textContent = ideas.length;
-                  document.getElementById('postedCount').textContent = postedCount;
-                  document.getElementById('skippedCount').textContent = skippedCount;
-                  document.getElementById('streakCount').textContent = streak.count;
-
-                  updateCategoryFilter();
-
-                  const list = document.getElementById('ideasList');
-                  const filteredIdeas = activeFilter === 'all' ? ideas : ideas.filter(idea => idea.category === activeFilter);
-
-                  if (filteredIdeas.length === 0) {
-                            list.innerHTML = '<li class="empty-state">No ideas yet</li>';
-                  } else {
-                            list.innerHTML = filteredIdeas.map((idea, i) => {
-                                        const originalIndex = ideas.indexOf(idea);
-                                        const categoryLabel = idea.category ? categories[idea.category] : '';
-                                        return `<li>
-                                                    <div class="idea-content">
-                                                                  ${categoryLabel ? `<span class="idea-category">${categoryLabel}</span>` : ''}
-                                                                                <span>${idea.text || idea}</span>
-                                                                                            </div>
-                                                                                                        <div class="idea-actions">
-                                                                                                                      <button class="edit-btn" onclick="editIdea(${originalIndex})">✏️</button>
-                                                                                                                                    <button class="delete-btn" onclick="deleteIdea(${originalIndex})">✕</button>
-                                                                                                                                                </div>
-                                                                                                                                                          </li>`;
-                            }).join('');
-                  }
-
-                  if (currentIdea) {
-                            document.getElementById('todaysIdea').style.display = 'block';
-                            const ideaObj = typeof currentIdea === 'string' ? {text: currentIdea} : JSON.parse(currentIdea);
-                            document.getElementById('ideaText').textContent = ideaObj.text || ideaObj;
-                  }
-
-                  updateHistory();
-                  checkStreak();
-          }
-
-          function updateCategoryFilter() {
-                  const usedCategories = [...new Set(ideas.filter(i => i.category).map(i => i.category))];
-                  const filterContainer = document.getElementById('categoryFilter');
-
-                  if (usedCategories.length === 0) {
-                            filterContainer.innerHTML = '';
-                            return;
-                  }
-
-                  let html = `<button class="filter-btn ${activeFilter === 'all' ? 'active' : ''}" onclick="setFilter('all')">All</button>`;
-                  usedCategories.forEach(cat => {
-                            html += `<button class="filter-btn ${activeFilter === cat ? 'active' : ''}" onclick="setFilter('${cat}')">${categories[cat]}</button>`;
-                  });
-                  filterContainer.innerHTML = html;
-          }
-
-          function setFilter(filter) {
-                  activeFilter = filter;
-                  updateUI();
-          }
-
-          function updateHistory() {
-                  const list = document.getElementById('historyList');
-                  if (history.length === 0) {
-                            list.innerHTML = '<li class="empty-state">No posts yet</li>';
-                  } else {
-                            list.innerHTML = history.slice().reverse().slice(0, 10).map(item => {
-                                        const date = new Date(item.date).toLocaleDateString('en-US', {month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'});
-                                        return `<li><span>${item.text}</span><div class="history-date">${date}</div></li>`;
-                            }).join('');
-                  }
-          }
-
-          function checkStreak() {
-                  const today = new Date().toDateString();
-                  const lastDate = streak.lastDate;
-
-                  if (lastDate) {
-                            const last = new Date(lastDate);
-                            const diff = Math.floor((new Date(today) - last) / (1000 * 60 * 60 * 24));
-                            if (diff > 1) {
-                                        streak.count = 0;
-                                        localStorage.setItem('streak', JSON.stringify(streak));
-                            }
-                  }
-                  document.getElementById('streakCount').textContent = streak.count;
-          }
-
-          function toggleIdeas() {
-                  const pool = document.getElementById('ideasPool');
-                  const arrow = document.getElementById('toggleArrow');
-                  pool.classList.toggle('show');
-                  arrow.textContent = pool.classList.contains('show') ? '-' : '+';
-          }
-
-          function toggleHistory() {
-                  const list = document.getElementById('historyList');
-                  const arrow = document.getElementById('historyArrow');
-                  list.classList.toggle('show');
-                  arrow.textContent = list.classList.contains('show') ? '-' : '+';
-          }
-
-          function openModal(isEdit = false) {
-                  document.getElementById('modal').classList.add('active');
-                  document.getElementById('modalTitle').textContent = isEdit ? 'Edit Idea' : 'Add New Idea';
-                  document.getElementById('newIdea').focus();
-          }
-
-          function closeModal() {
-                  document.getElementById('modal').classList.remove('active');
-                  document.getElementById('newIdea').value = '';
-                  document.getElementById('ideaCategory').value = '';
-                  editingIndex = -1;
-          }
-
-          function editIdea(index) {
-                  editingIndex = index;
-                  const idea = ideas[index];
-                  document.getElementById('newIdea').value = idea.text || idea;
-                  document.getElementById('ideaCategory').value = idea.category || '';
-                  openModal(true);
-          }
-
-          function saveIdea() {
-                  const text = document.getElementById('newIdea').value.trim();
-                  const category = document.getElementById('ideaCategory').value;
-
-                  if (text) {
-                            const ideaObj = {text, category};
-
-                            if (editingIndex >= 0) {
-                                        ideas[editingIndex] = ideaObj;
-                            } else {
-                                        ideas.push(ideaObj);
-                            }
-
-                            localStorage.setItem('contentIdeas', JSON.stringify(ideas));
-                            closeModal();
-                            updateUI();
-                  }
-          }
-
-          function deleteIdea(i) {
-                  ideas.splice(i, 1);
-                  localStorage.setItem('contentIdeas', JSON.stringify(ideas));
-                  updateUI();
-          }
-
-          function pickIdea() {
-                  const filteredIdeas = activeFilter === 'all' ? ideas : ideas.filter(idea => idea.category === activeFilter);
-                  if (filteredIdeas.length === 0) {
-                            alert('Add some ideas first!');
-                            return;
-                  }
-                  const picked = filteredIdeas[Math.floor(Math.random() * filteredIdeas.length)];
-                  currentIdea = JSON.stringify(picked);
-                  localStorage.setItem('currentIdea', currentIdea);
-                  updateUI();
-          }
-
-          function markPosted() {
-                  if (currentIdea) {
-                            const ideaObj = JSON.parse(currentIdea);
-                            const i = ideas.findIndex(idea => (idea.text || idea) === (ideaObj.text || ideaObj));
-                            if (i > -1) ideas.splice(i, 1);
-
-                            postedCount++;
-
-                            const today = new Date().toDateString();
-                            if (streak.lastDate !== today) {
-                                        const last = streak.lastDate ? new Date(streak.lastDate) : null;
-                                        const diff = last ? Math.floor((new Date(today) - last) / (1000 * 60 * 60 * 24)) : 0;
-                                        streak.count = diff === 1 || streak.count === 0 ? streak.count + 1 : 1;
-                                        streak.lastDate = today;
-                                        localStorage.setItem('streak', JSON.stringify(streak));
-                            }
-
-                            history.push({text: ideaObj.text || ideaObj, date: new Date().toISOString()});
-
-                            localStorage.setItem('contentIdeas', JSON.stringify(ideas));
-                            localStorage.setItem('postedCount', postedCount);
-                            localStorage.setItem('postHistory', JSON.stringify(history));
-
-                            currentIdea = null;
-                            localStorage.removeItem('currentIdea');
-                            document.getElementById('todaysIdea').style.display = 'none';
-                            updateUI();
-                  }
-          }
-
-          function skipIdea() {
-                  if (currentIdea) {
-                            const ideaObj = JSON.parse(currentIdea);
-                            const i = ideas.findIndex(idea => (idea.text || idea) === (ideaObj.text || ideaObj));
-                            if (i > -1) ideas.splice(i, 1);
-
-                            skippedCount++;
-                            localStorage.setItem('contentIdeas', JSON.stringify(ideas));
-                            localStorage.setItem('skippedCount', skippedCount);
-
-                            currentIdea = null;
-                            localStorage.removeItem('currentIdea');
-                            document.getElementById('todaysIdea').style.display = 'none';
-
-                            const msg = document.getElementById('loserMsg');
-                            msg.classList.add('show');
-                            setTimeout(() => msg.classList.remove('show'), 2000);
-                            updateUI();
-                  }
-          }
-
-          document.getElementById('newIdea').addEventListener('keydown', function(e) {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                            e.preventDefault();
-                            saveIdea();
-                  }
-          });
-
-          updateUI();
-    </script>
+    </div>div>
+    <div class="card">
+    <button class="btn-add" onclick="openModal()">+ Add New Idea</button>button>
+    <button class="btn-pick" onclick="pickIdea()">Get Today's Idea</button>button>
+    <div class="category-filter" id="categoryFilter"></div>div>
+    <button class="ideas-toggle" onclick="toggleIdeas()">
+    <span>Your Ideas (<span id="ideaCount">0</span>)</span>
+    <span id="toggleArrow">+</span>
+    </button>button>
+    <div class="ideas-pool" id="ideasPool">
+    <ul class="ideas-list" id="ideasList"></ul>ul>
+    </div>div>
+    </div>div>
+    <div class="card">
+    <h2>Your Stats</h2>
+    <div class="stats">
+    <div class="stat-box">
+    <div class="stat-number" id="postedCount">0</div>div>
+    <div class="stat-label">Posted</div>div>
+    </div>div>
+    <div class="stat-box">
+    <div class="stat-number" id="skippedCount">0</div>div>
+    <div class="stat-label">Skipped</div>div>
+    </div>div>
+    </div>div>
+    <div class="streak-box" id="streakBox">
+    <span class="streak-fire">🔥</span>
+    <div class="streak-number" id="streakCount">0</div>div>
+    <div class="streak-label">Day Streak</div>div>
+    </div>div>
+    <button class="section-toggle" onclick="toggleHistory()">
+    <span>Post History</span>
+    <span id="historyArrow">+</span>
+    </button>button>
+    <ul class="history-list" id="historyList"></ul>ul>
+    </div>div>
+    </div>div>
+  <div class="modal" id="modal">
+  <div class="modal-content">
+  <h3 id="modalTitle">Add New Idea</h3>
+  <textarea id="newIdea" placeholder="What content could you create?"></textarea>
+  <select id="ideaCategory">
+  <option value="">Select Category (optional)</option>option>
+  <option value="video">📹 Video</option>option>
+  <option value="post">📝 Post</option>option>
+  <option value="story">📱 Story</option>option>
+  <option value="reel">🎬 Reel</option>option>
+  <option value="blog">📰 Blog</option>option>
+  <option value="other">💡 Other</option>option>
+  </select>select>
+  <div class="modal-btns">
+  <button class="btn-cancel" onclick="closeModal()">Cancel</button>button>
+  <button class="btn-save" onclick="saveIdea()">Save</button>button>
+  </div>div>
+  </div>div>
+  </div>div>
+  <script>
+    let ideas=JSON.parse(localStorage.getItem('contentIdeas'))||[];
+    let postedCount=parseInt(localStorage.getItem('postedCount'))||0;
+    let skippedCount=parseInt(localStorage.getItem('skippedCount'))||0;
+    let currentIdea=localStorage.getItem('currentIdea');
+    let history=JSON.parse(localStorage.getItem('postHistory'))||[];
+    let streak=JSON.parse(localStorage.getItem('streak'))||{count:0,lastDate:null};
+    let editingIndex=-1;
+    let activeFilter='all';
+    const categories={video:'📹 Video',post:'📝 Post',story:'📱 Story',reel:'🎬 Reel',blog:'📰 Blog',other:'💡 Other'};
+    function updateUI(){document.getElementById('ideaCount').textContent=ideas.length;document.getElementById('postedCount').textContent=postedCount;document.getElementById('skippedCount').textContent=skippedCount;document.getElementById('streakCount').textContent=streak.count;updateCategoryFilter();const list=document.getElementById('ideasList');const filteredIdeas=activeFilter==='all'?ideas:ideas.filter(idea=>idea.category===activeFilter);if(filteredIdeas.length===0){list.innerHTML='<li class="empty-state">No ideas yet</li>';}else{list.innerHTML=filteredIdeas.map((idea,i)=>{const originalIndex=ideas.indexOf(idea);const categoryLabel=idea.category?categories[idea.category]:'';return'<li><div class="idea-content">'+(categoryLabel?'<span class="idea-category">'+categoryLabel+'</span>':'')+'<span>'+(idea.text||idea)+'</span></div><div class="idea-actions"><button class="edit-btn" onclick="editIdea('+originalIndex+')">✏️</button><button class="delete-btn" onclick="deleteIdea('+originalIndex+')">✕</button></div></li>';}).join('');}if(currentIdea){document.getElementById('todaysIdea').style.display='block';try{const ideaObj=JSON.parse(currentIdea);document.getElementById('ideaText').textContent=ideaObj.text||currentIdea;}catch(e){document.getElementById('ideaText').textContent=currentIdea;}}updateHistory();checkStreak();}
+    function updateCategoryFilter(){const usedCategories=[...new Set(ideas.filter(i=>i.category).map(i=>i.category))];const filterContainer=document.getElementById('categoryFilter');if(usedCategories.length===0){filterContainer.innerHTML='';return;}let html='<button class="filter-btn '+(activeFilter==='all'?'active':'')+'" onclick="setFilter(\'all\')">All</button>';usedCategories.forEach(cat=>{html+='<button class="filter-btn '+(activeFilter===cat?'active':'')+'" onclick="setFilter(\''+cat+'\')">'+categories[cat]+'</button>';});filterContainer.innerHTML=html;}
+    function setFilter(filter){activeFilter=filter;updateUI();}
+    function updateHistory(){const list=document.getElementById('historyList');if(history.length===0){list.innerHTML='<li class="empty-state">No posts yet</li>';}else{list.innerHTML=history.slice().reverse().slice(0,10).map(item=>{const date=new Date(item.date).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});return'<li><span>'+item.text+'</span><div class="history-date">'+date+'</div></li>';}).join('');}}
+    function checkStreak(){const today=new Date().toDateString();if(streak.lastDate){const diff=Math.floor((new Date(today)-new Date(streak.lastDate))/(1000*60*60*24));if(diff>1){streak.count=0;localStorage.setItem('streak',JSON.stringify(streak));}}document.getElementById('streakCount').textContent=streak.count;}
+    function toggleIdeas(){const pool=document.getElementById('ideasPool');const arrow=document.getElementById('toggleArrow');pool.classList.toggle('show');arrow.textContent=pool.classList.contains('show')?'-':'+';}
+    function toggleHistory(){const list=document.getElementById('historyList');const arrow=document.getElementById('historyArrow');list.classList.toggle('show');arrow.textContent=list.classList.contains('show')?'-':'+';}
+    function openModal(isEdit){document.getElementById('modal').classList.add('active');document.getElementById('modalTitle').textContent=isEdit?'Edit Idea':'Add New Idea';document.getElementById('newIdea').focus();}
+    function closeModal(){document.getElementById('modal').classList.remove('active');document.getElementById('newIdea').value='';document.getElementById('ideaCategory').value='';editingIndex=-1;}
+    function editIdea(index){editingIndex=index;const idea=ideas[index];document.getElementById('newIdea').value=idea.text||idea;document.getElementById('ideaCategory').value=idea.category||'';openModal(true);}
+    function saveIdea(){const text=document.getElementById('newIdea').value.trim();const category=document.getElementById('ideaCategory').value;if(text){const ideaObj={text:text,category:category};if(editingIndex>=0){ideas[editingIndex]=ideaObj;}else{ideas.push(ideaObj);}localStorage.setItem('contentIdeas',JSON.stringify(ideas));closeModal();updateUI();}}
+    function deleteIdea(i){ideas.splice(i,1);localStorage.setItem('contentIdeas',JSON.stringify(ideas));updateUI();}
+    function pickIdea(){const filteredIdeas=activeFilter==='all'?ideas:ideas.filter(idea=>idea.category===activeFilter);if(filteredIdeas.length===0){alert('Add some ideas first!');return;}const picked=filteredIdeas[Math.floor(Math.random()*filteredIdeas.length)];currentIdea=JSON.stringify(picked);localStorage.setItem('currentIdea',currentIdea);updateUI();}
+    function markPosted(){if(currentIdea){try{const ideaObj=JSON.parse(currentIdea);const i=ideas.findIndex(idea=>(idea.text||idea)===(ideaObj.text||ideaObj));if(i>-1)ideas.splice(i,1);}catch(e){const i=ideas.indexOf(currentIdea);if(i>-1)ideas.splice(i,1);}postedCount++;const today=new Date().toDateString();if(streak.lastDate!==today){const diff=streak.lastDate?Math.floor((new Date(today)-new Date(streak.lastDate))/(1000*60*60*24)):0;streak.count=(diff===1||streak.count===0)?streak.count+1:1;streak.lastDate=today;localStorage.setItem('streak',JSON.stringify(streak));}try{const ideaObj=JSON.parse(currentIdea);history.push({text:ideaObj.text||currentIdea,date:new Date().toISOString()});}catch(e){history.push({text:currentIdea,date:new Date().toISOString()});}localStorage.setItem('contentIdeas',JSON.stringify(ideas));localStorage.setItem('postedCount',postedCount);localStorage.setItem('postHistory',JSON.stringify(history));currentIdea=null;localStorage.removeItem('currentIdea');document.getElementById('todaysIdea').style.display='none';updateUI();}}
+    function skipIdea(){if(currentIdea){try{const ideaObj=JSON.parse(currentIdea);const i=ideas.findIndex(idea=>(idea.text||idea)===(ideaObj.text||ideaObj));if(i>-1)ideas.splice(i,1);}catch(e){const i=ideas.indexOf(currentIdea);if(i>-1)ideas.splice(i,1);}skippedCount++;localStorage.setItem('contentIdeas',JSON.stringify(ideas));localStorage.setItem('skippedCount',skippedCount);currentIdea=null;localStorage.removeItem('currentIdea');document.getElementById('todaysIdea').style.display='none';const msg=document.getElementById('loserMsg');msg.classList.add('show');setTimeout(function(){msg.classList.remove('show');},2000);updateUI();}}
+    document.getElementById('newIdea').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();saveIdea();}});
+    updateUI();
+  </script>
   </body>
 </html>
