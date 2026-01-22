@@ -55,43 +55,43 @@
   <body>
     <div class="container">
       <h1>Content Roulette</h1>
-    <p class="subtitle">Stop overthinking. Just post.</p>p>
-    <div id="loserMsg" class="loser-msg">LOSER</div>div>
+    <p class="subtitle">Stop overthinking. Just post.</p>
+    <div id="loserMsg" class="loser-msg">LOSER</div>
     <div id="todaysIdea" class="card todays-idea" style="display:none;">
     <h2>Today's Content</h2>
-    <p class="idea-text" id="ideaText"></p>p>
+    <p class="idea-text" id="ideaText"></p>
     <div class="btn-group">
-    <button class="btn-posted" onclick="markPosted()">Posted</button>button>
-    <button class="btn-skip" onclick="skipIdea()">Skip</button>button>
-    </div>div>
-    </div>div>
+    <button class="btn-posted" onclick="markPosted()">Posted</button>
+    <button class="btn-skip" onclick="skipIdea()">Skip</button>
+    </div>
+    </div>
     <div class="card">
-    <button class="btn-add" onclick="openModal()">+ Add New Idea</button>button>
-    <button class="btn-pick" onclick="pickIdea()">Get Today's Idea</button>button>
+    <button class="btn-add" onclick="openModal()">+ Add New Idea</button>
+    <button class="btn-pick" onclick="pickIdea()">Get Today's Idea</button>
     <button class="ideas-toggle" onclick="toggleIdeas()">
     <span>Your Ideas (<span id="ideaCount">0</span>)</span>
     <span id="toggleArrow">+</span>
-    </button>button>
+    </button>
     <div class="ideas-pool" id="ideasPool">
-    <ul class="ideas-list" id="ideasList"><li class="empty-state">No ideas yet</li>li></ul>ul>
-    </div>div>
-    </div>div>
+    <ul class="ideas-list" id="ideasList"><li class="empty-state">No ideas yet</li></ul>
+    </div>
+    </div>
     <div class="card">
     <h2>Your Stats</h2>
     <div class="stats">
-    <div class="stat-box"><div class="stat-number" id="postedCount">0</div>div><div class="stat-label">Posted</div>div></div>div>
-    <div class="stat-box"><div class="stat-number" id="skippedCount">0</div>div><div class="stat-label">Skipped</div>div></div>div>
-    </div>div>
-    </div>div>
-    </div>div>
+    <div class="stat-box"><div class="stat-number" id="postedCount">0</div><div class="stat-label">Posted</div></div>
+    <div class="stat-box"><div class="stat-number" id="skippedCount">0</div><div class="stat-label">Skipped</div></div>
+    </div>
+    </div>
+    </div>
   <div class="modal" id="modal">
   <div class="modal-content">
   <h3>Add New Idea</h3>
   <textarea id="newIdea" placeholder="What content could you create?"></textarea>
   <div class="modal-btns">
-  <button class="btn-cancel" onclick="closeModal()">Cancel</button>button>
-  <button class="btn-save" onclick="saveIdea()">Save</button>button>
->textarea>>h3>>h2>>li>      document.getElementById('skippedCount').textContent=skippedCount;
+  <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+  <button class="btn-save" onclick="saveIdea()">Save</button>
+>>>>      document.getElementById('skippedCount').textContent=skippedCount;
       const list=document.getElementById('ideasList');
       if(ideas.length===0){list.innerHTML='<li class="empty-state">No ideas yet</li>';}
       else{list.innerHTML=ideas.map((idea,i)=>'<li><span>'+idea+'</span><button class="delete-btn" onclick="deleteIdea('+i+')">x</button></li>').join('');}
